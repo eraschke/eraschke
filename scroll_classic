@@ -1,0 +1,51 @@
+<script type="text/javascript">
+    
+    // get Top of ViewPort 
+    
+    function scrollY() {
+      var de = document.documentElement;
+      return self.pageYOffset || 
+             ( de && de.scrollTop ) || 
+             document.body.scrollTop;
+    }
+    
+    
+    // get Page total Height
+    function pageHeight() {
+      return document.body.scrollHeight;
+    }
+    
+    // get Window Height
+    
+    function windowHeight() {
+      var de = document.documentElement;
+      return self.innerHeight || 
+             (de && de.clientHeight ) || 
+             document.body.clientHeight;
+    }
+    
+    
+    // flag to track only once
+    
+    var gaTracked = false;
+    
+    
+    window.onscroll = function(){
+    
+    // on scroll determine scolling %
+    var yScroll = (scrollY() + windowHeight())/pageHeight()*100
+    
+    // if we have not tracked and we have scrolled past 90 % track event
+    
+    if ( !gaTracked && yScroll > 90) {
+      gaTracked = true;
+      
+      // triggerEvent and pass the current page URI as label for the event
+      var gaPage = window.location.pathname
+      var gaSearch = window.location.search;
+        
+      _gaq.push(['_trackEvent', 'Engagement', 'Scrolled To 90%', gaPage + gaSearch]);
+    }
+    };
+    
+</script>
